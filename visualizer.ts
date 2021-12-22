@@ -14,19 +14,34 @@ function main(): void {
 		width: number;
 		height: number;
 		color: string;
-		constructor(x: number, y: number, width: number, height: number, color: string) {
+		index: number;
+		constructor(x: number, y: number, width: number, height: number, color: string, index: number) {
 			this.x = x;
 			this.y = y;
 			this.width = width;
 			this.height = height;
 			this.color = color;
+			this.index = index;
 		}
 		update(micInput: number) {
 			this.height = micInput * 1000;
+			// this.height = micInput * 300;
 		}
 		draw(context: CanvasRenderingContext2D) {
-			context.fillStyle = this.color;
-			context?.fillRect(this.x, this.y, this.width, this.height);
+			// context.fillStyle = this.color;
+			// context.fillRect(this.x, this.y, this.width, this.height);
+			context.strokeStyle = this.color;
+			context.save();
+
+			context.translate(canvas.width / 2, canvas.height / 2);
+			context.rotate(this.index);
+			context.beginPath();
+			context.moveTo(this.x, this.height);
+			// context.moveTo(0, 0);
+			context.lineTo(this.x, this.y);
+			context.stroke();
+
+			context.restore();
 		}
 	}
 
@@ -38,7 +53,7 @@ function main(): void {
 	function createBars() {
 		for (let i = 0; i < 256; i++) {
 			const color = "hsl(" + i + ", 100%, 50%)";
-			bars.push(new Bars(i * barWidth, canvas.height / 2, 1, 20, color));
+			bars.push(new Bars(i * barWidth, canvas.height / 2, 1, 20, color, i));
 		}
 	}
 	createBars();
