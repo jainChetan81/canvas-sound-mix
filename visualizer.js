@@ -26,12 +26,14 @@ function main() {
                 this.height -= this.height * 0.03;
             }
         }
-        draw(context) {
+        draw(context, volume) {
             context.strokeStyle = this.color;
             context.save();
             context.translate(canvas.width / 2, canvas.height / 2);
-            context.rotate(this.index * 0.05);
+            context.rotate(this.index * 0.03);
+            context.scale(1, 1);
             context.beginPath();
+            context.scale(1 + volume, 1 + volume);
             context.moveTo(this.x, this.y);
             context.lineTo(this.y, this.height);
             context.stroke();
@@ -55,9 +57,10 @@ function main() {
         if (microphone.initialized) {
             ctx === null || ctx === void 0 ? void 0 : ctx.clearRect(0, 0, canvas.width, canvas.height);
             const samples = microphone.getSamples();
+            const volume = microphone.getVolume();
             bars.forEach((bar, i) => {
                 bar.update(samples[i]);
-                bar.draw(ctx);
+                bar.draw(ctx, volume);
             });
         }
         requestAnimationFrame(animate);

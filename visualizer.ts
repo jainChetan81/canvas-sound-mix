@@ -32,15 +32,17 @@ function main(): void {
 			}
 			// this.height = micInput * 300;
 		}
-		draw(context: CanvasRenderingContext2D) {
+		draw(context: CanvasRenderingContext2D, volume: number) {
 			// context.fillStyle = this.color;
 			// context.fillRect(this.x, this.y, this.width, this.height);
 			context.strokeStyle = this.color;
 			context.save();
 
 			context.translate(canvas.width / 2, canvas.height / 2);
-			context.rotate(this.index * 0.05);
+			context.rotate(this.index * 0.03);
+			context.scale(1, 1);
 			context.beginPath();
+			context.scale(1 + volume, 1 + volume);
 			// context.moveTo(this.x, this.height);
 			context.moveTo(this.x, this.y);
 			context.lineTo(this.y, this.height);
@@ -69,10 +71,11 @@ function main(): void {
 			ctx?.clearRect(0, 0, canvas.width, canvas.height);
 			//TODO: generate audio samples for canvas
 			const samples: number[] = microphone.getSamples();
+			const volume: number = microphone.getVolume();
 			// TODO: animate bars based on microphone data
 			bars.forEach((bar: Bars, i: number) => {
 				bar.update(samples[i]);
-				bar.draw(ctx);
+				bar.draw(ctx, volume);
 			});
 		}
 		requestAnimationFrame(animate);
