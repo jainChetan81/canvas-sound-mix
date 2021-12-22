@@ -44,8 +44,8 @@ function main() {
     const barWidth = canvas.width / 256;
     function createBars() {
         for (let i = 0; i < 256; i++) {
-            const color = "hsl(" + i + ", 100%, 50%)";
-            bars.push(new Bars(i * barWidth, canvas.height / 2, 1, 20, color, i));
+            const color = "hsl(" + i * 2 + ", 100%, 50%)";
+            bars.push(new Bars(0, i * 1.5, 1, 50, color, i));
         }
     }
     createBars();
