@@ -24,7 +24,12 @@ function main(): void {
 			this.index = index;
 		}
 		update(micInput: number) {
-			this.height = micInput * 1000;
+			const sound: number = micInput * 1000;
+			if (sound > this.height) {
+				this.height = sound;
+			} else {
+				this.height -= this.height * 0.03;
+			}
 			// this.height = micInput * 300;
 		}
 		draw(context: CanvasRenderingContext2D) {
@@ -34,11 +39,11 @@ function main(): void {
 			context.save();
 
 			context.translate(canvas.width / 2, canvas.height / 2);
-			context.rotate(this.index);
+			context.rotate(this.index * 0.05);
 			context.beginPath();
-			context.moveTo(this.x, this.height);
-			// context.moveTo(0, 0);
-			context.lineTo(this.x, this.y);
+			// context.moveTo(this.x, this.height);
+			context.moveTo(this.x, this.y);
+			context.lineTo(this.y, this.height);
 			context.stroke();
 
 			context.restore();
