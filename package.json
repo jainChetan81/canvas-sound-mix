@@ -1,0 +1,16 @@
+{
+	"name": "audio-magic",
+	"version": "1.0.0",
+	"description": "",
+	"main": "script.js",
+	"scripts": {
+		"tsc": "tsc ",
+		"tsc:watch": "tsc --watch"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"typescript": "^4.5.4"
+	}
+}
