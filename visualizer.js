@@ -35,6 +35,7 @@ function main() {
             context.moveTo(this.x, this.y);
             context.lineTo(this.y, this.height);
             context.stroke();
+            context.strokeRect(this.y, this.height, this.height / 2, 5);
             context.restore();
         }
     }
@@ -45,7 +46,7 @@ function main() {
     function createBars() {
         for (let i = 0; i < 256; i++) {
             const color = "hsl(" + i * 2 + ", 100%, 50%)";
-            bars.push(new Bars(0, i * 1.5, 1, 50, color, i));
+            bars.push(new Bars(0, i * 1.5, 5, 50, color, i));
         }
     }
     createBars();
