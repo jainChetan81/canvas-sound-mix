@@ -38,11 +38,11 @@ function main(): void {
 			context.strokeStyle = this.color;
 			context.save();
 
-			context.translate(canvas.width / 2, canvas.height / 2);
+			context.translate(0, 0);
 			context.rotate(this.index * 0.03);
 			context.scale(1, 1);
 			context.beginPath();
-			context.scale(1 + volume, 1 + volume);
+			context.scale(1 + volume * 0.8, 1 + volume * 0.8);
 			// context.moveTo(this.x, this.height);
 			context.moveTo(this.x, this.y);
 			context.lineTo(this.y, this.height);
@@ -56,7 +56,6 @@ function main(): void {
 	// const bar1 = new Bars(10, 10, 100, 200, "blue");
 	const microphone: Microphone = new Microphone();
 	let bars: Bars[] = [];
-	console.log(`microphone`, microphone);
 	const barWidth: number = canvas.width / 256;
 	function createBars() {
 		for (let i = 0; i < 256; i++) {
@@ -65,7 +64,7 @@ function main(): void {
 		}
 	}
 	createBars();
-	console.log(bars);
+	let angle: number = 0;
 	function animate() {
 		if (microphone.initialized) {
 			ctx?.clearRect(0, 0, canvas.width, canvas.height);
@@ -73,10 +72,15 @@ function main(): void {
 			const samples: number[] = microphone.getSamples();
 			const volume: number = microphone.getVolume();
 			// TODO: animate bars based on microphone data
+			angle -= 0.001 + volume * 0.05;
+			ctx.save();
+			ctx.translate(canvas.width / 2, canvas.height / 2);
+			ctx.rotate(angle);
 			bars.forEach((bar: Bars, i: number) => {
 				bar.update(samples[i]);
 				bar.draw(ctx, volume);
 			});
+			ctx.restore();
 		}
 		requestAnimationFrame(animate);
 	}
